@@ -9,6 +9,7 @@ const {
   deleteTicket,
   addMessages,
   filterStatus,
+  getTicketsUsers,
 } = require("../controllers/ticketController");
 const { protect, admin } = require("../middleware/authMiddleware");
 const DIR = "public/";
@@ -29,12 +30,10 @@ var upload = multer({
 });
 
 // Routes for tickets
-router
-  .route("/")
-  .post(protect, upload.array("img"), createTicket)
-  .get(protect, admin, getTickets);
+router.route("/").post(protect, createTicket).get(protect, admin, getTickets);
 router.route("/mytickets").get(protect, getUserTickets);
-router.route("/addMessages").post(protect, addMessages);
+router.route("/addMessages").post(protect, upload.array("img"), addMessages);
+router.route("/usersTickets").get(protect, getTicketsUsers);
 router
   .route("/:id")
   .put(protect, updateTicket)

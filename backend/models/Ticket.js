@@ -6,6 +6,10 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const messages = new mongoose.Schema({
+  userName: {
+    type: String,
+    required: true,
+  },
   text: {
     type: String,
   },
@@ -13,8 +17,8 @@ const messages = new mongoose.Schema({
     type: Date,
     default: timeZone,
   },
-  files: {
-    type: Array,
+  img: {
+    type: String,
   },
 });
 
@@ -31,9 +35,7 @@ const TicketSchema = new Schema({
     type: Number,
     default: 0,
   },
-  img: {
-    type: String,
-  },
+
   priority: {
     type: String,
   },
@@ -52,6 +54,7 @@ const TicketSchema = new Schema({
   },
   closingTimeStamp: {
     type: Date,
+    default: null,
   },
 });
 

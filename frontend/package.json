@@ -12,6 +12,7 @@
     "devextreme": "20.1.7",
     "devextreme-react": "^20.2.13",
     "jwt-decode": "^3.0.0-beta.2",
+    "moment": "^2.30.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.3.0",
     "react-dom": "^16.13.1",
