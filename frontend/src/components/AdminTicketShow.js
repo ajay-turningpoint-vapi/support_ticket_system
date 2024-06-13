@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Table from "@material-ui/core/Table";
 import dummy from "../assests/user.jpg";
-import { Dropdown, Badge, Modal,Spinner } from "react-bootstrap";
+import { Dropdown, Badge, Modal, Spinner } from "react-bootstrap";
 import { Button, Form } from "react-bootstrap";
 import { ip } from "../services";
 import axiosInstance from "../utils/axiosConfig";
@@ -26,7 +26,8 @@ class AdminTicketShow extends Component {
       id: "",
       search: "",
       role: 0,
-      userId: "",img: "",
+      userId: "",
+      img: "",
       file: null,
       loading: false,
     };
@@ -55,9 +56,6 @@ class AdminTicketShow extends Component {
   handleShow = (id) => {
     this.setState({ show: true, id: id });
   };
-
-
-
 
   handleAddMessage = (id, message) => {
     this.setState({ loading: true });
@@ -156,17 +154,14 @@ class AdminTicketShow extends Component {
     }
   }
 
-
-
-
-  
   render() {
-
     return (
-      <div className="container">
- 
-        <div className="jumbotron mt-5">
-          <div className="col-sm-8 mx-auto">
+      <div className="">
+        <div
+          className="jumbotron mt-5 mb-5"
+          style={{ width: "1200px", margin: "auto" }}
+        >
+          <div className="col-12 mx-auto">
             <h1 className="text-center">
               ADMIN PAGE
               <br />
@@ -224,7 +219,7 @@ class AdminTicketShow extends Component {
                   <TableCell>Current User</TableCell>
                   <TableCell>Created By</TableCell>
                   <TableCell>Assigned To</TableCell>
-                 
+
                   <TableCell align="right">Status</TableCell>
                   <TableCell align="right">Change Status</TableCell>
                   <TableCell align="right">Add Message</TableCell>
@@ -252,7 +247,7 @@ class AdminTicketShow extends Component {
                           </ul>
                         ))}
                       </TableCell>
-                
+
                       <TableCell align="right">
                         {this.statusName(row.status)}
                       </TableCell>
@@ -297,8 +292,10 @@ class AdminTicketShow extends Component {
                         {moment(row.updatedTimeStamp).fromNow()}
                       </TableCell>
                       <TableCell>
-                      {row.closingTimeStamp===null? "Not Closed" : moment(row.closingTimeStamp).fromNow()}
-                    </TableCell>
+                        {row.closingTimeStamp === null
+                          ? "Not Closed"
+                          : moment(row.closingTimeStamp).fromNow()}
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
@@ -311,129 +308,128 @@ class AdminTicketShow extends Component {
             <Modal.Title>Messages</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          {this.state.loading ? ( // Show loader when loading state is true
-            <div className="d-flex justify-content-center align-items-center">
-              <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
-              </Spinner>
-            </div>
-          ) : (
-            <>
-              <div className="comments-section">
-                {this.state.data.length > 0 &&
-                  this.state.data
-                    .filter((ticket) => ticket._id === this.state.id)[0]
-                    ?.messages.map((message, index) => (
-                      <div key={index} className="col-md-12">
-                        <div
-                          className="card"
-                          style={{ marginBottom: "10px" }}
-                        >
-                          <div className="card-body">
-                            <div className="d-flex flex-start align-items-center">
-                              <img
-                                className="rounded-circle shadow-1-strong me-3 mr-2"
-                                src={dummy}
-                                alt="avatar"
-                                width="60"
-                                height="60"
-                              />
-                              <div>
-                                <h6 className="fw-bold text-primary mb-1">
-                                  {message.userName}
-                                </h6>
-                                <p className="text-muted small mb-0">
-                                  Shared publicly -{" "}
-                                  {moment(message.date).fromNow()}
-                                </p>
-                              </div>
-                            </div>
-
-                            <p className="mt-3 mb-4 pb-2">{message.text}</p>
-
-                            {message.img && (
-                              <div className="mt-3 mb-4 pb-2">
+            {this.state.loading ? ( // Show loader when loading state is true
+              <div className="d-flex justify-content-center align-items-center">
+                <Spinner animation="border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </Spinner>
+              </div>
+            ) : (
+              <>
+                <div className="comments-section">
+                  {this.state.data.length > 0 &&
+                    this.state.data
+                      .filter((ticket) => ticket._id === this.state.id)[0]
+                      ?.messages.map((message, index) => (
+                        <div key={index} className="col-md-12">
+                          <div
+                            className="card"
+                            style={{ marginBottom: "10px" }}
+                          >
+                            <div className="card-body">
+                              <div className="d-flex flex-start align-items-center">
                                 <img
-                                  src={`http://localhost:5000/public/${message.img}`}
-                                  alt={`attachment`}
-                                  style={{ maxWidth: "30%", height: "auto" }}
+                                  className="rounded-circle shadow-1-strong me-3 mr-2"
+                                  src={dummy}
+                                  alt="avatar"
+                                  width="60"
+                                  height="60"
                                 />
+                                <div>
+                                  <h6 className="fw-bold text-primary mb-1">
+                                    {message.userName}
+                                  </h6>
+                                  <p className="text-muted small mb-0">
+                                    Shared publicly -{" "}
+                                    {moment(message.date).fromNow()}
+                                  </p>
+                                </div>
                               </div>
-                            )}
 
-                            <div className="small d-flex justify-content-start">
-                              <a
-                                href="#!"
-                                className="d-flex align-items-center me-3"
-                              ></a>
+                              <p className="mt-3 mb-4 pb-2">{message.text}</p>
+
+                              {message.img && (
+                                <div className="mt-3 mb-4 pb-2">
+                                  <img
+                                    src={`http://localhost:5000/public/${message.img}`}
+                                    alt={`attachment`}
+                                    style={{ maxWidth: "30%", height: "auto" }}
+                                  />
+                                </div>
+                              )}
+
+                              <div className="small d-flex justify-content-start">
+                                <a
+                                  href="#!"
+                                  className="d-flex align-items-center me-3"
+                                ></a>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-              </div>
-              <div
-                className="card-footer py-3 border-0"
-                style={{ backgroundColor: "#f8f9fa" }}
-              >
-                <div className="d-flex flex-start w-100">
-                  <img
-                    className="rounded-circle shadow-1-strong me-3 mr-2"
-                    src={dummy}
-                    alt="avatar"
-                    width="40"
-                    height="40"
-                  />
-                  <div data-mdb-input-init className="form-outline w-100">
-                    <textarea
-                      className="form-control"
-                      id="textAreaExample"
-                      rows="3"
-                      style={{ background: "#fff" }}
-                      name="message"
-                      placeholder="Add Message..."
-                      value={this.state.message}
-                      onChange={this.handleChange}
-                      required
-                    ></textarea>
+                      ))}
+                </div>
+                <div
+                  className="card-footer py-3 border-0"
+                  style={{ backgroundColor: "#f8f9fa" }}
+                >
+                  <div className="d-flex flex-start w-100">
+                    <img
+                      className="rounded-circle shadow-1-strong me-3 mr-2"
+                      src={dummy}
+                      alt="avatar"
+                      width="40"
+                      height="40"
+                    />
+                    <div data-mdb-input-init className="form-outline w-100">
+                      <textarea
+                        className="form-control"
+                        id="textAreaExample"
+                        rows="3"
+                        style={{ background: "#fff" }}
+                        name="message"
+                        placeholder="Add Message..."
+                        value={this.state.message}
+                        onChange={this.handleChange}
+                        required
+                      ></textarea>
 
-                    <label>
-                      <input
-                        type="file"
-                        class="hidden"
-                        name="file"
-                        onChange={this.handleFileChange}
-                        style={{ display: "none" }}
-                      />
+                      <label>
+                        <input
+                          type="file"
+                          class="hidden"
+                          name="file"
+                          onChange={this.handleFileChange}
+                          style={{ display: "none" }}
+                        />
 
-                      <i class="fa-solid fa-paperclip fa-lg mt-3"></i>
-                    </label>
+                        <i class="fa-solid fa-paperclip fa-lg mt-3"></i>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="float-end mt-2 pt-1">
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      className="mr-3"
+                      onClick={() =>
+                        this.handleAddMessage(this.state.id, this.state.message)
+                      }
+                    >
+                      Add Message
+                    </Button>
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={this.handleClose}
+                    >
+                      Cancel
+                    </Button>
                   </div>
                 </div>
-                <div className="float-end mt-2 pt-1">
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    className="mr-3"
-                    onClick={() =>
-                      this.handleAddMessage(this.state.id, this.state.message)
-                    }
-                  >
-                    Add Message
-                  </Button>
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    onClick={this.handleClose}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </div>
-            </>
-          )}
-        </Modal.Body>
-     
+              </>
+            )}
+          </Modal.Body>
         </Modal>
       </div>
     );
